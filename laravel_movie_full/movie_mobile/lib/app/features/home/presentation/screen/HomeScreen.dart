@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:movie_mobile/widget/CustomSearch.dart';
-import '../../../../../widget/CustomAppbar.dart';
+import 'package:movie_mobile/app/features/home/presentation/Widget/CustomPopular.dart';
+import 'package:movie_mobile/app/features/home/presentation/Widget/CustomSearch.dart';
+import '../../../../../widget/CustomSectionTitle.dart';
+import '../Widget/CustomAppbar.dart';
 import '../Widget/CustomBanner.dart';
 class HomeScreen extends ConsumerStatefulWidget {
   HomeScreen({super.key});
@@ -25,6 +27,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ///banner
           CustomBanner(),
           ///Now Playing
+          CustomSectionTitle(title: 'Popular', onTap: () {  },),
+          ///
+          CustomPopular(),
           // SliverPadding(
           //   padding: EdgeInsetsGeometry.only(left: 10, right: 10),
           //   sliver: Obx(

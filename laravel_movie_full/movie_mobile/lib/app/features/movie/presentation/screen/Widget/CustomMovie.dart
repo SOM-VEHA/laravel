@@ -1,21 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:movie_app/conrollers/FavoriteController.dart';
-import '../../data/models/movieModel.dart';
+import 'package:movie_mobile/app/features/movie/data/model/MovieModel.dart';
 class CustomMovie extends StatelessWidget {
-  CustomMovie({super.key,required this.movie, required this.onTap, required this.favoriteController});
+  CustomMovie({super.key,required this.movie, required this.onTap,
+    // required this.favoriteController
+  });
   final MovieModel movie;
   final VoidCallback onTap;
-  final FavoriteController favoriteController;
+  // final FavoriteController favoriteController;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(8),
           color: const Color(0xFF1C1C1C),
         ),
         child: Column(
@@ -26,7 +26,7 @@ class CustomMovie extends StatelessWidget {
               child:  Stack(
                 children: [
                   ClipRRect(
-                    borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10),),
+                    borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8),),
                     child: CachedNetworkImage(
                       fit: BoxFit.cover,
                       width: double.infinity,
@@ -45,15 +45,26 @@ class CustomMovie extends StatelessWidget {
                         shape: BoxShape.circle,
                       ),
                       child: InkWell(
-                        onTap: ()=>favoriteController.toggleFavorite(movie.id),
-                        child: Obx((){
-                          final isFav = favoriteController.isFavorite(movie.id);
-                          return Icon(
-                            isFav ? Icons.favorite : Icons.favorite_border,
-                            color: isFav ? Colors.red : Colors.grey,
+                          onTap: (){},
+                          child: Icon(
+                            Icons.favorite,
                             size: 16,
-                          );
-                        })
+                          ),
+
+
+
+
+
+
+                        // onTap: ()=>favoriteController.toggleFavorite(movie.id),
+                        // child: Obx((){
+                        //   final isFav = favoriteController.isFavorite(movie.id);
+                        //   return Icon(
+                        //     isFav ? Icons.favorite : Icons.favorite_border,
+                        //     color: isFav ? Colors.red : Colors.grey,
+                        //     size: 16,
+                        //   );
+                        // })
                       ),
                     ),
                   ),

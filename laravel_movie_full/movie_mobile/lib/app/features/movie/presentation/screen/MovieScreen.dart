@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../../../widget/CustomAppbar.dart';
+import '../../../home/presentation/Widget/CustomAppbar.dart';
+import 'Widget/CustomAllMovie.dart';
+import 'Widget/CustomCategory.dart';
 class MovieScreen extends StatelessWidget {
   MovieScreen({super.key});
   @override
@@ -9,10 +11,8 @@ class MovieScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           CustomAppbar(),
-          // CustomCategory(),
-          // CustomCategory(),
-          //movie list
-          // Movie(),
+          CustomCategory(),
+          CustomAllMovie(),
         ],
       ),
     );

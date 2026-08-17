@@ -1,9 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
-
-import '../movie/MovieScreen.dart';
 class CustomSectionTitle extends StatelessWidget {
   const CustomSectionTitle({super.key, required this.title,required this.onTap});
   final VoidCallback onTap;
@@ -24,7 +20,8 @@ class CustomSectionTitle extends StatelessWidget {
               ),
             ),
             GestureDetector(
-              onTap: ()=>Get.to(MovieeScreen()),
+              // onTap: ()=>Get.to(MovieeScreen()),
+              onTap: (){},
               child: const Text(
                 "See all",
                 style: TextStyle(

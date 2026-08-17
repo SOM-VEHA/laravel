@@ -1,15 +1,16 @@
-import 'package:get/get.dart';
-import 'package:movie_app/modules/app/AppController.dart';
-import 'package:movie_app/modules/app/AppScreen.dart';
-import '../../modules/app/AppBinding.dart';
-import 'app_routes.dart';
+// import 'package:go_router/go_router.dart';
+// import 'package:movie_mobile/app/features/movie/presentation/screen/MovieDetailScreen.dart';
+//
+// final appRouter = GoRouter(
+//   routes: [
+//     GoRoute(
+//       path: '/movie/:id',
+//       builder: (context, state) {
+//         final id = int.parse(state.pathParameters['id']!);
+//         return MovieDetailScreen(movieId: id);
+//       },
+//     ),
+//   ],
+// );
 
-class AppPages {
-  static final pages = [
-    GetPage(
-      name: AppRoutes.App,
-      page: () => AppScreen(),
-      binding: AppBinding(),
-    ),
-  ];
-}
+// context.push('/movie/${movie.id}');

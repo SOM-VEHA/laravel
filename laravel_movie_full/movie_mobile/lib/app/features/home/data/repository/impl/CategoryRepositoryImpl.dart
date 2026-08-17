@@ -10,8 +10,9 @@ class CategoryRepositoryImpl implements CategoryRepository{
 
   @override
   Future<List<CategoryModel>> getAll()async {
-    final response = await dio.get(ApiConstants.profile);
-    final List data = response.data;
+    final response = await dio.get("http://10.0.2.2:8000/api/categories");
+    final List data = response.data['data'];
+    print("categoryyyyyy : ${data}");
     return data.map((toElement)=>CategoryModel.fromJson(toElement)).toList();
   }
 }

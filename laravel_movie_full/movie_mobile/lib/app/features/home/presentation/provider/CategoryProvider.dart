@@ -6,3 +6,4 @@ import 'package:movie_mobile/app/features/home/data/repository/impl/CategoryRepo
 final dioProvider = Provider<Dio>((ref)=>Dio());
 final categoryRepositoryProvider = Provider<CategoryRepository>((ref)=>CategoryRepositoryImpl(ref.watch(dioProvider)));
 final categoryProvider = FutureProvider<List<CategoryModel>>((ref) async =>ref.watch(categoryRepositoryProvider).getAll());
+final selectedCategoryIdProvider = StateProvider<int?>((ref) => null);
