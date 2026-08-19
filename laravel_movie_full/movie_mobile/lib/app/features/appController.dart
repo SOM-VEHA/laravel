@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_mobile/app/features/profile/ProfileScreen.dart';
-import 'favorite/FavoriteScreen.dart';
+import 'favorite/presentation/screen/FavoriteScreen.dart';
 import 'home/presentation/screen/HomeScreen.dart';
 import 'movie/presentation/screen/MovieScreen.dart';
 

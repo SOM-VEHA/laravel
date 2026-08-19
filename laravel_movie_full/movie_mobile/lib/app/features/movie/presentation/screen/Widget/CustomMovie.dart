@@ -102,25 +102,25 @@ class CustomMovie extends StatelessWidget {
                 children:  [
                   Text(
                     movie.title,
-                    maxLines: 1,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
-                  ),
-                  SizedBox(height: 6),
-                  Text(
-                    movie.description,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: Colors.grey,
                       fontSize: 12,
-                      height: 1.3,
                     ),
                   ),
+                  // SizedBox(height: 6),
+                  // Text(
+                  //   movie.description,
+                  //   maxLines: 3,
+                  //   overflow: TextOverflow.ellipsis,
+                  //   style: TextStyle(
+                  //     color: Colors.grey,
+                  //     fontSize: 12,
+                  //     height: 1.3,
+                  //   ),
+                  // ),
                 ],
               ),
             ),

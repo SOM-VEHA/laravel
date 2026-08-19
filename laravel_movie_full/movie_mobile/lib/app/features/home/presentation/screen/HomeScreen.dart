@@ -3,8 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_mobile/app/features/home/presentation/Widget/CustomPopular.dart';
 import 'package:movie_mobile/app/features/home/presentation/Widget/CustomSearch.dart';
 import '../../../../../widget/CustomSectionTitle.dart';
+import '../Widget/CustomActionMovie.dart';
 import '../Widget/CustomAppbar.dart';
 import '../Widget/CustomBanner.dart';
+import '../Widget/CustomGhostMovie.dart';
 class HomeScreen extends ConsumerStatefulWidget {
   HomeScreen({super.key});
 
@@ -26,10 +28,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           CustomSearch(onTap: (){}),
           ///banner
           CustomBanner(),
-          ///Now Playing
+          ///Popular
           CustomSectionTitle(title: 'Popular', onTap: () {  },),
-          ///
           CustomPopular(),
+          ///ghost
+          CustomSectionTitle(title: 'Ghost', onTap: () {  },),
+          CustomGhostMovie(),
+          ///ghost
+          // CustomSectionTitle(title: 'Action', onTap: () {  },),
+          // CustomActionMovie(),
           // SliverPadding(
           //   padding: EdgeInsetsGeometry.only(left: 10, right: 10),
           //   sliver: Obx(

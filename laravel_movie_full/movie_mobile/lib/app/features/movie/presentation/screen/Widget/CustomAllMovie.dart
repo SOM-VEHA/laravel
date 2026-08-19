@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:movie_mobile/app/features/movie/presentation/provider/MovieProvider.dart';
+import 'package:movie_mobile/app/features/movie/presentation/provider/movieProvider.dart';
 
 import '../MovieDetailScreen.dart';
 import 'CustomMovie.dart';
@@ -12,40 +12,26 @@ class CustomAllMovie extends ConsumerWidget {
     final movies = ref.watch(movieProvider);
     return SliverPadding(
       padding: EdgeInsetsGeometry.all(10),
-      sliver: movies.when(
-        loading: () => const SliverToBoxAdapter(
-          child: Center(
-            child: CircularProgressIndicator(),
-          ),
+      sliver:SliverGrid.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          childAspectRatio: 0.65,
         ),
-        error: (error, stack) => SliverToBoxAdapter(
-          child: Center(
-            child: Text(error.toString()),
-          ),
-        ),
-        data: (movies) {
-          return SliverGrid.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              childAspectRatio: 0.65,
-            ),
-            itemCount: movies.length,
-            itemBuilder: (context, index) {
-              final movie=movies[index];
-              return CustomMovie(movie: movie, onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MovieDetailScreen(
-                      movie: movie,
-                    ),
-                  ),
-                );
-              },);
-            },
-          );
+        itemCount: movies.length,
+        itemBuilder: (context, index) {
+          final movie=movies[index];
+          return CustomMovie(movie: movie, onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MovieDetailScreen(
+                  movie: movie,
+                ),
+              ),
+            );
+          },);
         },
       ),
     );

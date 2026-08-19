@@ -1,12 +1,41 @@
 import 'package:flutter/material.dart';
-class FavoriteScreen extends StatefulWidget {
+import 'package:movie_mobile/app/features/favorite/presentation/screen/widget/FavoriteAll.dart';
+import '../../../home/presentation/Widget/CustomAppbar.dart';
+import '../../../movie/presentation/screen/Widget/CustomCategory.dart';
+class FavoriteScreen extends StatelessWidget {
   FavoriteScreen({super.key});
-
   @override
-  State<FavoriteScreen> createState() => _FavoriteScreenState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: CustomScrollView(
+        slivers: [
+          CustomAppbar(),
+          CustomCategory(),
+          FavoriteAll(),
+        ],
+      ),
+    );
+  }
 }
 
-class _FavoriteScreenState extends State<FavoriteScreen> {
+
+
+
+
+
+
+
+
+
+class FavoriteScreens extends StatefulWidget {
+  FavoriteScreens({super.key});
+
+  @override
+  State<FavoriteScreens> createState() => _FavoriteScreenState();
+}
+
+class _FavoriteScreenState extends State<FavoriteScreens> {
   // final favorite_controller = Get.find<FavoriteController>();
   @override
   void initState() {
@@ -18,20 +47,20 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-//       appBar: AppBar(
-//         backgroundColor: Colors.black,
-//         title: const Text.rich(
-//           TextSpan(
-//             text: 'Favorites',
-//             style: TextStyle(
-//               fontWeight: FontWeight.w900,
-//               fontSize: 22,
-//               color: Colors.black,
-//             ),
-//           ),
-//         ),
-//         centerTitle: true,
-//       ),
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: const Text.rich(
+          TextSpan(
+            text: 'Favorites',
+            style: TextStyle(
+              fontWeight: FontWeight.w900,
+              fontSize: 22,
+              color: Colors.white,
+            ),
+          ),
+        ),
+        centerTitle: false,
+      ),
 //       body: Padding(
 //         padding: const EdgeInsets.all(8),
 //         child: Obx(() {

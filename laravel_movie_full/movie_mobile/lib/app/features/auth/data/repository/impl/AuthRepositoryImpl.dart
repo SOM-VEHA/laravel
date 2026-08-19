@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import '../../model/Auth.dart';
+import '../../../../../network/api_exception.dart';
+import '../../model/AuthModel.dart';
 import '../AuthRepository.dart';
 
-class AuthRepositoryImpl implements AuthRepository{
-
+class AuthRepositoryImpl implements AuthRepository {
   final Dio dio;
 
   AuthRepositoryImpl(this.dio);
@@ -11,31 +11,28 @@ class AuthRepositoryImpl implements AuthRepository{
   @override
   Future<Auth> login({required String email, required String password}) async {
     try {
-      final response = await dio.post('/login',data: {
-          'email': email,
-          'password': password,
-        },
+      final response = await dio.post(
+        'http://10.0.2.2:8000/api/login',
+        data: {'email': email, 'password': password},
       );
+      final json = response.data as Map<String, dynamic>;
+      if (json['success'] == true) {
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return Auth.fromJson(response.data as Map<String, dynamic>);
-      } else {
-        throw AuthException(
-          message: response.data['message'] ?? 'Failed to login',
+        return Auth.fromJson(json);
+      }
+      throw ApiException(
+        message: json['message']?.toString() ?? 'Login failed',
+      );
+    } on DioException catch (e) {
+      final errorData = e.response?.data;
+      if (errorData is Map<String, dynamic>) {
+        throw ApiException(
+          message: errorData['message']?.toString() ?? 'Network error',
         );
       }
-    } on DioException catch (e) {
-      // Handle Dio-specific errors (network timeout, 401 unauthorized, etc.)
-      final errorMessage = e.response?.data?['message'] ??
-          e.message ??
-          'An unexpected network error occurred';
-      throw AuthException(message: errorMessage);
-    } catch (e) {
-      // Handle unexpected parsing or logic errors
-      throw AuthException(message: e.toString());
+      throw ApiException(message: e.message ?? 'Network error');
     }
   }
-}
 
   @override
   Future<void> logout() {
@@ -44,7 +41,11 @@ class AuthRepositoryImpl implements AuthRepository{
   }
 
   @override
-  Future<Auth> register({required String username, required String email, required String password}) {
+  Future<Auth> register({
+    required String username,
+    required String email,
+    required String password,
+  }) {
     // TODO: implement register
     throw UnimplementedError();
   }

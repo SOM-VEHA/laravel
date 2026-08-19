@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/src/extension_instance.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:movie_app/conrollers/AuthController.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movie_mobile/widget/AppTextField.dart';
 
-import '../../core/utils/validators.dart';
-import '../widgets/AppPasswordField.dart';
-import '../widgets/AppTextField.dart';
-
-class SignUpScreen extends StatelessWidget {
+import '../../../../../validator/validators.dart';
+import '../../../../../widget/AppPasswordField.dart';
+import '../provider/SingnUpProvider.dart';
+class SignUpScreen extends ConsumerStatefulWidget {
   SignUpScreen({super.key});
-  final authController=Get.put(AuthController());
+
+  @override
+  ConsumerState<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(signupProvider);
+    final controller = ref.read(signupProvider.notifier);
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -22,7 +25,7 @@ class SignUpScreen extends StatelessWidget {
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 400),
               child: Form(
-                key: authController.signupFormKey, // <-- Wrap form
+                key: controller.signupFormKey, // <-- Wrap form
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -44,7 +47,7 @@ class SignUpScreen extends StatelessWidget {
                       icon: Icons.email,
                       label: 'Email',
                       hintText: 'you@example.com',
-                      controller: authController.emailController,
+                      controller: controller.emailController,
                       validator: Validators.emailValidator,
                       keyboardType: TextInputType.emailAddress,
                     ),
@@ -54,7 +57,7 @@ class SignUpScreen extends StatelessWidget {
                       icon: Icons.phone,
                       label: 'Phone',
                       hintText: '015618463',
-                      controller: authController.phoneController,
+                      controller: controller.phoneController,
                       validator: (v) {
                         if (v == null || v.isEmpty) return 'Phone is required';
                         return null;
@@ -66,46 +69,46 @@ class SignUpScreen extends StatelessWidget {
                     AppPasswordField(
                       icon: Icons.lock,
                       label: 'Password',
-                      controller: authController.passwordController,
+                      controller: controller.passwordController,
                       validator: Validators.passwordValidator,
-                      obscureText:authController.Obscured.value,
-                      onToggle: () {},
+                      obscureText: state.obscurePassword,
+                      onToggle: ()=>controller.togglePassword(),
                     ),
                     const SizedBox(height: 20),
 
                     AppPasswordField(
                       icon: Icons.lock,
                       label: 'Confirm Password',
-                      controller: authController.passwordConfirmController,
+                      controller: controller.confirmPasswordController,
                       validator: Validators.passwordValidator,
-                      obscureText: authController.Obscured.value,
-                      onToggle: () {},
+                      obscureText: state.obscurePassword,
+                      onToggle: ()=>controller.togglePassword(),
                     ),
                     const SizedBox(height: 30),
 
-                    Obx(() => SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: authController.isLoading.value ? null :authController.login,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black,
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(vertical: 16),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(14),
-                            ),
-                          ),
-                          child: authController.isLoading.value
-                              ? const CircularProgressIndicator(
-                            color: Colors.white,
-                          )
-                              : const Text(
-                            'Create Account',
-                            style: TextStyle(fontWeight: FontWeight.w700),
-                          ),
-                        ),
-                      ),
-                    ),
+                    // Obx(() => SizedBox(
+                    //     width: double.infinity,
+                    //     child: ElevatedButton(
+                    //       onPressed: authController.isLoading.value ? null :authController.login,
+                    //       style: ElevatedButton.styleFrom(
+                    //         backgroundColor: Colors.black,
+                    //         foregroundColor: Colors.white,
+                    //         padding: const EdgeInsets.symmetric(vertical: 16),
+                    //         shape: RoundedRectangleBorder(
+                    //           borderRadius: BorderRadius.circular(14),
+                    //         ),
+                    //       ),
+                    //       child: authController.isLoading.value
+                    //           ? const CircularProgressIndicator(
+                    //         color: Colors.white,
+                    //       )
+                    //           : const Text(
+                    //         'Create Account',
+                    //         style: TextStyle(fontWeight: FontWeight.w700),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                     SizedBox(height: 20),
                     Row(
                       children: [
@@ -135,7 +138,9 @@ class SignUpScreen extends StatelessWidget {
                       children: [
                         const Text('Already have an account? '),
                         TextButton(
-                          onPressed: () => Get.back(),
+                          onPressed: (){
+                            Navigator.pop(context);
+                          },
                           child: const Text('Sign In'),
                         ),
                       ],

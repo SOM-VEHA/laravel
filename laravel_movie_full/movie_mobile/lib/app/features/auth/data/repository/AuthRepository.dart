@@ -1,4 +1,4 @@
-import '../model/Auth.dart';
+import '../model/AuthModel.dart';
 
 abstract interface class AuthRepository{
 

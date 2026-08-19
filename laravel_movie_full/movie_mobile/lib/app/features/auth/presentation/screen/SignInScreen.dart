@@ -1,36 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movie_mobile/app/features/AppScreen.dart';
+import 'package:movie_mobile/app/features/auth/presentation/screen/SignUpScreen.dart';
+import 'package:movie_mobile/app/features/auth/presentation/state/SiginState.dart';
 import '../../../../../validator/validators.dart';
 import '../../../../../widget/AppPasswordField.dart';
 import '../../../../../widget/AppTextField.dart';
 import '../../../../../widget/CustomButton.dart';
-class SignInScreen extends StatefulWidget {
+import '../provider/SiginProvider.dart';
+class SignInScreen extends ConsumerStatefulWidget {
   SignInScreen({super.key});
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  ConsumerState<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
-
+class _SignInScreenState extends ConsumerState<SignInScreen> {
   final Obscured = true;
-
-  final loginFormKey = GlobalKey<FormState>();
-
-  final signupFormKey = GlobalKey<FormState>();
-
-  final emailController = TextEditingController();
-
-  final usernameController = TextEditingController();
-
-  final phoneController = TextEditingController();
-
-  final passwordController = TextEditingController();
-
-  final passwordConfirmController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
+    ref.listen<LoginState>(
+      loginProvider, (previous, next) {
+        if (next.success && !(previous?.success ?? false)) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (_) =>  AppScreen(),
+            ),
+          );
+        }
+      },
+    );
     const brandOrange = Color(0xFFDF7F31);
+    final state = ref.watch(loginProvider);
+    final controller = ref.read(loginProvider.notifier);
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -39,7 +42,7 @@ class _SignInScreenState extends State<SignInScreen> {
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 400),
               child: Form(
-                key: loginFormKey,
+                key: controller.loginFormKey,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -57,20 +60,19 @@ class _SignInScreenState extends State<SignInScreen> {
                       icon: Icons.email,
                       label: 'Email',
                       hintText: 'you@example.com',
-                      controller: emailController,
+                      controller: controller.emailController,
                       validator: Validators.emailValidator,
                       keyboardType: TextInputType.emailAddress,
+
                     ),
                     SizedBox(height: 30),
                     AppPasswordField(
                       icon: Icons.password,
                       label: 'Password',
-                      controller: passwordController,
+                      controller: controller.passwordController,
                       validator: Validators.passwordValidator,
-                      obscureText: true,
-                      onToggle: () {
-                        // authController.Obscured.value = !authController.Obscured.value;
-                      },
+                      obscureText: state.obscurePassword,
+                      onToggle: ()=>controller.togglePassword(),
                     ),
                     const SizedBox(height: 8),
                     Row(
@@ -94,31 +96,13 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                     SizedBox(height: 8),
                     CustomButton(
+                      isLoading: state.loading,
                       text: 'Sign In',
                       onPressed: () {
-                        // _authController.login();
+                        if (controller.loginFormKey.currentState!.validate()) {
+                          controller.login();
+                        }
                       },
-                    ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Get.offAll(AppScreen());
-                          // authController.login();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.black,
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14),
-                          ),
-                        ),
-                        child: Text(
-                          'Sign In',
-                          style: TextStyle(fontWeight: FontWeight.w700),
-                        ),
-                      ),
                     ),
                     SizedBox(height: 20),
                     Row(
@@ -150,7 +134,12 @@ class _SignInScreenState extends State<SignInScreen> {
                         const Text("Don't have an account? "),
                         TextButton(
                           onPressed: () {
-                            // Get.to(SignUpScreen());
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SignUpScreen(),
+                              ),
+                            );
                           },
                           child: const Text('Sign Up'),
                         ),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../movie/presentation/screen/MovieDetailScreen.dart';
 import '../../../movie/presentation/screen/Widget/CustomMovie.dart';
-import '../provider/popularMoviesProvider.dart';
+import 'package:movie_mobile/app/features/movie/presentation/provider/moviePopularProvider.dart';
 class CustomPopular extends ConsumerWidget {
   const CustomPopular({super.key});
   @override
@@ -23,27 +23,33 @@ class CustomPopular extends ConsumerWidget {
           ),
         ),
         data: (movies) {
-          return SliverGrid.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              childAspectRatio: 0.65,
-            ),
-            itemCount: movies.length,
-            itemBuilder: (context, index) {
-              final movie=movies[index];
-              return CustomMovie(movie: movie, onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MovieDetailScreen(
+          return SliverToBoxAdapter(
+            child: Container(
+              width: double.infinity,
+              height: 230,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 5,
+                itemBuilder: (context, index) {
+                  final movie = movies[index];
+                  return Container(
+                    margin: const EdgeInsets.only(right: 15),
+                    width: 150,
+                    child: CustomMovie(
                       movie: movie,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => MovieDetailScreen(movie: movie),
+                          ),
+                        );
+                      },
                     ),
-                  ),
-                );
-              },);
-            },
+                  );
+                },
+              ),
+            ),
           );
         },
       ),
