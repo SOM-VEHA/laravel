@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class CategoriesController extends Controller
 {
     public function index(){
-        $categories=Category::with('movie')->get();
+        $categories=Category::all();
         return response()->json([
             "status" => "success",
             "data" => $categories

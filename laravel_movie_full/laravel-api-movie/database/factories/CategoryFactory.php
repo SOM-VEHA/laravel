@@ -18,7 +18,28 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->unique()->words(2, true),
+            'name' => fake()->randomElement([
+                'Action',
+                'Adventure',
+                'Animation',
+                'Comedy',
+                'Crime',
+                'Documentary',
+                'Drama',
+                'Family',
+                'Fantasy',
+                'Horror',
+                'Mystery',
+                'Romance',
+                'Science Fiction',
+                'Thriller',
+                'War',
+                'Western',
+                'Korean Drama',
+                'Chinese Drama',
+                'Khmer Movie',
+                'Thai Movie',
+            ]),
             'image' => fake()->imageUrl(400, 400),
         ];
     }

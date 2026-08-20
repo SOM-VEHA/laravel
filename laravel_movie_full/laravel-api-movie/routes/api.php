@@ -14,6 +14,12 @@ Route::post('register', [AuthController::class, 'register']);
 // Public
 Route::get('slides', [SlideController::class, 'index']);
 Route::get('movies', [MovieController::class, 'index']);
+Route::get('movies/search', [MovieController::class, 'search']);
+Route::get('movies/popula', [MovieController::class, 'isPopularMovie']);
+Route::get('movies/action', [MovieController::class, 'action']);
+Route::get('movies/ghost', [MovieController::class, 'ghost']);
+Route::get('movies/{id}', [MovieController::class, 'show']);
+Route::get('movies/{id}/related', [MovieController::class, 'related']);
 Route::get('categories', [CategoriesController::class, 'index']);
 // Authenticated
 Route::middleware('auth:sanctum')->group(function () {

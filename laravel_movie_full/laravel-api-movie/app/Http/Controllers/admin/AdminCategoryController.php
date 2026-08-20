@@ -14,11 +14,7 @@ class AdminCategoryController extends Controller
     public function index()
     {
         $categories=Category::all();
-        return response()->json(
-            [
-                'categories'=>$categories,
-            ]
-        );
+        return view('admin.categories.index',compact('categories'));
     }
 
     /**
